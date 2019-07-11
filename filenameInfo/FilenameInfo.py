@@ -7,12 +7,12 @@ def FilenameInfo(filename):
     # Remove the file extension
     filenameNoExt    = filename.split('.') [0]
     filenameSplit    = filenameNoExt.split('_')
-    filenameIndex    = len(filenameSplit) - 1;
 
     # Format alphanumeric fields
-    for i in range(filenameIndex):
+    for i in range(len(filenameSplit)):
         if (len(filenameSplit[i]) > 3):
-            filenameSplit[i] = re.sub("[^0-9]", "", filenameSplit[i]).strip("0")
+            print("filenameSplit[", i, "] ", filenameSplit[i])
+            filenameSplit[i] = re.sub("[^0-9]", "", filenameSplit[i]).lstrip("0")
 
     # Once formatted, assign the values to each section
     episode         = filenameSplit[0]
