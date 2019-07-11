@@ -1,40 +1,34 @@
-import os
+import re
 filename = "EP103_SQ001_SH0170_LGT_v004.ma"
-dict = {}
 
-filenameNoExt   = os.path.splitext(filename) [0]
-filenameSplit   = filenameNoExt.split('_')
-episode         = filenameSplit[0][2:]
-# episode         = episode[2:]
-sequence        = filenameSplit[1]
-sequence        = sequence[2:]
-shot            = filenameSplit[2]
-shot            = shot[2:]
-departament     = filenameSplit[3]
-version         = filenameSplit[4]
-version         = version[1:]
+def FilenameInfo(filename):
+    # Inicializate the dictionary
+    fileDict = {}
+    # Remove the file extension
+    filenameNoExt    = filename.split('.') [0]
+    filenameSplit    = filenameNoExt.split('_')
+    filenameIndex    = len(filenameSplit) - 1;
 
+    # Format alphanumeric fields
+    for i in range(filenameIndex):
+        if (len(filenameSplit[i]) > 3):
+            filenameSplit[i] = re.sub("[^0-9]", "", filenameSplit[i]).strip("0")
 
-# for (x in filenameSplit):
-#     if (len(x) == 5):
+    # Once formatted, assign the values to each section
+    episode         = filenameSplit[0]
+    sequence        = filenameSplit[1]
+    shot            = filenameSplit[2]
+    departament     = filenameSplit[3]
+    version         = filenameSplit[4]
 
-dict["Episode"]     = episode
-dict["Sequence"]    = sequence
-dict["Shot"]        = shot
-dict["Department"]  = departament
-dict["Version"]     = version
+    # Add the formatted values to the dictionary
+    fileDict["Episode"]     = episode
+    fileDict["Sequence"]    = sequence
+    fileDict["Shot"]        = shot
+    fileDict["Department"]  = departament
+    fileDict["Version"]     = version
 
-print("filename is ", filename)
-print("('filename', 'ext') is ", os.path.splitext(filename))
-print("filenameNoExt is ", filenameNoExt)
-print("filenameSplit is ", filenameSplit)
-print("\n")
-# print("{'Episode': ", episode, ",")
-# print(" 'Sequence': ", sequence, ",")
-# print(" 'Shot': ", shot, ",")
-# print(" 'Department': ", departament, ",")
-# print(" 'Version': ", version, "}")
-print("dict is ", dict)
+    print("File info is ", fileDict)
+    return fileDict;
 
-def FilenameInfo(self, filename):
-    pass
+FilenameInfo(filename)
